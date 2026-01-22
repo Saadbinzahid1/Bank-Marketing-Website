@@ -7,6 +7,7 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const nav = document.querySelector(".nav");
 const header = document.querySelector(".header");
+const sections = document.querySelectorAll(".section");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
 const btnScrollTo = document.querySelector(".btn--scroll-to");
@@ -111,3 +112,24 @@ const headerObserver = new IntersectionObserver(
   },
 );
 headerObserver.observe(header);
+
+//////////////////////////////
+/*----Sections Fade In-----*/
+const sectionsObserver = new IntersectionObserver(
+  (entries, observer) => {
+    const entry = entries[0];
+    console.log(entry);
+    if (!entry.isIntersecting) return;
+    entry.target.classList.remove("section--hidden");
+    observer.unobserve(entry.target);
+  },
+  {
+    root: null,
+    threshold: 0.15,
+  },
+);
+
+sections.forEach((section) => {
+  sectionsObserver.observe(section);
+  section.classList.add("section--hidden");
+});
