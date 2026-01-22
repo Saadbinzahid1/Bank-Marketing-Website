@@ -6,6 +6,7 @@
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const nav = document.querySelector(".nav");
+const header = document.querySelector(".header");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
 const btnScrollTo = document.querySelector(".btn--scroll-to");
@@ -96,3 +97,17 @@ nav.addEventListener("mouseover", function (e) {
 nav.addEventListener("mouseout", function (e) {
   handleHover(e, 1);
 });
+
+//////////////////////////////
+/*----Sticky Navigation----*/
+const headerObserver = new IntersectionObserver(
+  (entries) => {
+    if (!entries[0].isIntersecting) nav.classList.add("sticky");
+    else nav.classList.remove("sticky");
+  },
+  {
+    root: null,
+    threshold: 0,
+  },
+);
+headerObserver.observe(header);
