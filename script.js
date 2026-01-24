@@ -16,6 +16,10 @@ const tabsContainer = document.querySelector(".operations__tab-container");
 const tabs = document.querySelectorAll(".operations__tab");
 const tabContent = document.querySelectorAll(".operations__content");
 const imgTargets = document.querySelectorAll("img[data-src");
+const slider = document.querySelector(".slider");
+const btnLeft = document.querySelector(".slider__btn--left");
+const btnRight = document.querySelector(".slider__btn--right");
+const slides = document.querySelectorAll(".slide");
 
 const openModal = function (e) {
   e.preventDefault();
@@ -131,7 +135,7 @@ const sectionsObserver = new IntersectionObserver(
 
 sections.forEach((section) => {
   sectionsObserver.observe(section);
-  section.classList.add("section--hidden");
+  // section.classList.add("section--hidden");
 });
 
 //////////////////////////////
@@ -155,3 +159,27 @@ function loadImg(entries, observer) {
 }
 
 imgTargets.forEach((img) => imageObservers.observe(img));
+
+//////////////////////////////
+/*----Slider Component-----*/
+let curSlide = 0;
+const maxSlides = slides.length;
+slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+
+btnRight.addEventListener("click", (s, i) => {
+  if (curSlide === maxSlides - 1) curSlide = 0;
+  else curSlide++;
+
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - curSlide)}%)`),
+  );
+});
+
+btnLeft.addEventListener("click", (s, i) => {
+  if (curSlide === 0) curSlide = maxSlides - 1;
+  else curSlide--;
+
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - curSlide)}%)`),
+  );
+});
